@@ -1,17 +1,19 @@
-module Thingo exposing (..)
+-- Try adding the ability to crouch or to land on top of the crate.
 
-import Element exposing (..)
+
+module Main exposing (..)
+
 import Keyboard
 import Math.Vector2 exposing (Vec2)
 import Math.Vector3 exposing (..)
 import Math.Vector3 as V3
 import Math.Matrix4 exposing (..)
 import Task exposing (Task)
-import Text
 import Time exposing (..)
 import WebGL exposing (..)
-import Html exposing (Html)
+import Html exposing (Html, text, div)
 import Html.App as Html
+import Html.Attributes exposing (width, height, style)
 import AnimationFrame
 import Window
 
@@ -260,24 +262,32 @@ view { size, person, texture } =
         entities =
             world texture perspectiveMatrix
     in
-        layers
-            [ webgl ( size.width, size.height ) entities
-            , container size.width 100 position message
+        div
+            [ style
+                [ ( "width", toString size.width ++ "px" )
+                , ( "height", toString size.height ++ "px" )
+                , ( "position", "relative" )
+                ]
             ]
-            |> Element.toHtml
+            [ WebGL.toHtml [ width size.width, height size.height, style [ ( "display", "block" ) ] ]
+                entities
+            , div
+                [ style
+                    [ ( "position", "absolute" )
+                    , ( "font-family", "monospace" )
+                    , ( "text-align", "center" )
+                    , ( "left", "20px" )
+                    , ( "right", "20px" )
+                    , ( "top", "20px" )
+                    ]
+                ]
+                [ text message ]
+            ]
 
 
-position : Position
-position =
-    midLeftAt (absolute 40) (relative 0.5)
-
-
-message : Element
+message : String
 message =
-    leftAligned
-        <| Text.monospace
-        <| Text.fromString
-        <| "Walk around with a first person perspective.\n"
+    "Walk around with a first person perspective.\n"
         ++ "Arrows keys to move, space bar to jump."
 
 
