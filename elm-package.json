@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "summary": "First person navigation in Elm",
-    "repository": "https://github.com/aenthaler/first-person-elm-start-app-simple.git",
+    "repository": "https://github.com/genthaler/first-person-elm-start-app-simple.git",
     "license": "Copyright (c) 2014, John P Mayer, Jr",
     "source-directories": ["."],
     "exposed-modules": [],
